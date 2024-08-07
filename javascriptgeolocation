@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p><b>Uses your location and google maps..</b></p>
+Enter what you are looking for in your area..
+<p><input type="text" id="search" name="search"></p>
+
+<button onclick="checkinput()">Find It Near Me</button>
+
+<p id="demo"></p>
+
+<p id="googlelink"></p>
+
+<p id="googletextlist"></p>
+
+<script>
+const x = document.getElementById("demo");
+
+function checkinput() {
+  var whatuserput = document.getElementById('search').value;
+  if ((whatuserput == null || whatuserput == "")) {
+      alert("Please Fill In Required Fields");
+      return false;
+    }
+  getLocation()
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+    newlat = position.coords.latitude;
+    newlong = position.coords.longitude;
+    
+    var whatuserput = document.getElementById('search').value;
+    
+    newurl = "https://www.google.com/maps/search/" + whatuserput + "/@" + newlat + "," + newlong;
+
+    let text = "Click Here to view..";
+    let result = text.link(newurl);
+    document.getElementById("googlelink").innerHTML = result;
+
+    let thelist = "This is where we would return the list..";
+
+    document.getElementById("googletextlist").innerHTML = thelist;
+
+    x.innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+}
+</script>
